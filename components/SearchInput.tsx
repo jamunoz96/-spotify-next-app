@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
-import { useSpotify } from "../context/SpotifyContext";
 import { IoSearchOutline, IoCloseOutline } from "react-icons/io5";
+import { useStore } from "../redux/hook";
 
 export default function SearchInput() {
   const router = useRouter();
-
-  const { query, setQuery } = useSpotify();
-
+  const { query, setQuery } = useStore();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(query);
     router.push(`/search/${query}`);
   };
 

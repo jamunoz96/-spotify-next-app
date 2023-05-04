@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { SpotifyProvider } from "../context/SpotifyContext";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 import "../styles/globals.css";
 import "../styles/nonTailwind.css";
 
@@ -37,21 +39,23 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SessionProvider session={pageProps?.session}>
-      <SpotifyProvider>
-        {router.pathname === "/login" ? (
-          <Component {...pageProps} />
-        ) : (
-          <>
-            <Sidebar />
-            <div className="flex flex-col ml-64">
-              <Header />
-              <main className="mt-4 ml-4">
-                <Component {...pageProps} />
-              </main>
-            </div>
-          </>
-        )}
-      </SpotifyProvider>
+      <Provider store={store}>
+        <SpotifyProvider>
+          {router.pathname === "/login" ? (
+            <Component {...pageProps} />
+          ) : (
+            <>
+              <Sidebar />
+              <div className="flex flex-col ml-64">
+                <Header />
+                <main className="mt-4 ml-4">
+                  <Component {...pageProps} />
+                </main>
+              </div>
+            </>
+          )}
+        </SpotifyProvider>
+      </Provider>
     </SessionProvider>
   );
 }
